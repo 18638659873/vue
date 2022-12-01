@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>自定义标签使用</title>
+  <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+<body>
+
+<!--
+
+自定义函数可能会被调用的时机
+1. 指令和元素成功绑定后，也就是初始化 第一次
+2. 指定所在的模板被重新解析时候
+
+-->
+
+<div id="root">
+  <h2>{{name}}</h2>
+  <h2>当前元素的值是：<span v-text="n"></span></h2>
+  <!--  v-big 就是一个自定义的标签，其实真正的名字就是big 但是在使用的时候 是v-big-->
+  <!--  big的作用是，把原来的数字放大10倍，然后再放在这个元素中-->
+  <h2>放大10被的值是：<span v-big="n"></span></h2>
+  <button @click="n++">点击自增—+1</button>
+  <input type="text" v-fbind:value="n" placeholder="自定义函数">
+</div>
+
+</body>
+
+<script type="text/javascript">
+  Vue.config.productionTip = false
+  const vm = new Vue({
+    el: '#root',
+    data: {
+      name: 'chong',
+      n: 1
+    },
+    directives: {// 所有自定义函数中的this都是window
+      big(element, binding) {
+        element.innerText = binding.value * 10
+      },
+      fbind: {// 完整的写法,一般情况下 bind 和update差不多，所以简写模式下的一个方法就是bind和update的结合
+        bind(element, binding) {//绑定元素时,第一次初始化时候被调用
+          element.value = binding.value
+        },
+        inserted(element, binding) {//被插入到页面的时候会调用
+          // element.innerText = binding.value
+          element.focus()
+        },
+        update(element, binding) {//重新解析模板时被调用
+          element.value = binding.value
+        }
+      }
+    }
+  })
+</script>
+</html>

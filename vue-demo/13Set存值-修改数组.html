@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Set存值|修改数组</title>
+  <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+<body>
+<!--Vue.set  这个只能设置vm _data属性里面的属性，不能直接在_data上加属性，也不鞥直接在vm上加属性-->
+
+<!--修改数组只能使用数组的 pop push splicae 等等，不能直接= ，只有这样才能响应式-->
+<div id="root">】
+  <h2>人员信息</h2>
+  <button @click="addAttribute">添加一个属性</button>
+  <ul>
+    <li v-for="(val,key) in person" :key="key">
+      {{key}}---{{val}}
+    </li>
+  </ul>
+  <button @click="addElement">修改一个元素</button>
+  <h2>遍历修改数组</h2>
+  <ul>
+    <li v-for="(h,index) in habbys" :key="index">
+      {{h}}
+    </li>
+  </ul>
+</div>
+
+</body>
+
+<script type="text/javascript">
+  Vue.config.productionTip = false
+
+  const vm = new Vue({
+    el: '#root',
+    data: {
+      person: {
+        name: 'chong',
+        age: 12
+      },
+      habbys: [
+        '抽烟',
+        '喝酒',
+        '烫头'
+      ]
+    },
+    methods: {
+      addAttribute() {
+        // Vue.set(this.person, 'sex', '男')
+        this.$set(this.person, 'sex', '男')
+      },
+      addElement() {
+        this.habbys.splice(0, 1, '不抽烟')
+      }
+    }
+
+  })
+</script>
+</html>

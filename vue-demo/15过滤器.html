@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>过滤器</title>
+  <script type="text/javascript" src="./js/vue.js"></script>
+  <script type="text/javascript" src="./js/dayjs.min.js"></script>
+</head>
+
+
+<!--
+
+下载一些好用的插件 使用bootcdn网站,可以下载各类的js插件使用
+https://www.bootcdn.cn/
+
+Vue3中已经没有这个filters的使用了
+
+-->
+
+<body>
+<div id="root">
+  <h2>显示时间</h2>
+  <!--  计算属性-->
+  <h3>现在的时间是：{{fmtTime}}</h3>
+  <!--  函数使用-->
+  <h3>现在的时间是：{{getFmtTime()}}</h3>
+  <!--  使用过滤器   过滤器是一定会传一个参数的，就是第一个参数time，然后还可以指定其他其他参数，
+  他是放在time的后面，可以使用多个过滤器，前一个过滤器的返回结果是下一个过滤器的参数-->
+  <h3>现在的时间是：{{time | timeFormater}}</h3>
+
+</div>
+
+</body>
+
+<script type="text/javascript">
+
+  Vue.config.productionTip = false
+  const vm = new Vue({
+    el: '#root',
+    data: {
+      time: 1668330006000
+    },
+    computed: {
+      fmtTime() {
+        return dayjs(this.time).format('YYYY-MM-DD HH:mm:ss')
+      }
+    },
+    methods: {
+      getFmtTime() {
+        return dayjs(this.time).format('YYYY-MM-DD HH:mm:ss')
+      }
+    },
+    filters: {
+      timeFormater(val) {
+        return dayjs(val).format('YYYY-MM-DD HH:mm:ss')
+      }
+    }
+  })
+
+</script>
+</html>

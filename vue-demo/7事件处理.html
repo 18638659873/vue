@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>事件处理</title>
+  <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+
+<!--
+vue中时间修饰符：
+1. prevent 阻止默认事件 （常用）
+2. stop 阻止事件冒泡 （常用）
+3. once 事件只触发一次
+4. capture 使用事件的捕获模式
+5. self 只有event.target是当前操作的元素才触发事件
+6. passive 事件的默认行为立即执行，无需等待事件回调函数执行完毕 ，例如一个方法执行很长时间，执行完后，才会触发默认事件，这个修饰可以忽略时间
+修改符可以连续写  @keyup.prevent.stop
+
+Vue中常用的键盘事件
+  回车 enter
+  删除 delete
+  退出 esc
+  空格 space
+  换行 tab  必须配合 keydown使用
+  上 up
+  下down
+  左 left
+  右 right
+
+-->
+
+<body>
+<div id="root">
+  <h2>欢迎你，{{name}}</h2>
+  <!--  <button v-on:click="showInfo">点击提示信息</button>-->
+  <!--  v-on:click 可以直接简写为@clike-->
+  <button @click="showInfo1">点击提示信息1</button>
+  <button @click="showInfo2(555,$event)">点击提示信息2</button>
+
+  <a href="http://www.baidu.com" @click="redirectBaidu">点击百度连接，但是阻止调转过去</a>
+  <!--  .prevent 阻止按钮自身的默认行为-->
+  <a href="http://www.baidu.com" @click.prevent="redirectBaidu">点击百度连接，但是阻止调转过去</a>
+
+  <!--  只要滚轮滑动就会触发事件-->
+  <ul @wheel="wheel">
+    <!--    只要滑动框移动，就会触发事件-->
+    <!--  <ul @scroll="scroll">-->
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+  </ul>
+
+  <!--  keyup 是键盘抬起时触发，keydown是 键盘按下时触发-->
+  <input type="text" placeholder="按下回车进行提示" @keyup="keyOptEvent">
+  <!--  keyup.enter 回车键 keyup.del 删除键-->
+  <input type="text" placeholder="按下回车进行提示" @keyup.enter="keyOptEvent">
+
+</div>
+</body>
+<script type="text/javascript">
+
+  // function showInfo() {
+  //   alert("hello")
+  // }
+
+  const vm = new Vue({
+    el: '#root',
+    data: {
+      name: 'chong'
+    },
+    methods: {
+      showInfo1(event) {// 这里的this 就vm对象 event.target 就是按钮对象
+        // console.log(event.target.innerText) // 打印的就是按钮里面的内容
+        alert('hello 1')
+      },
+      showInfo2(num, event) {
+        alert('hello:' + num)
+      },
+      redirectBaidu(e) {
+        // 阻止按钮本身的默认行为 例如：a的调转
+        // e.preventDefault()
+        alert('hello')
+      },
+      keyOptEvent(e) {
+        // 键盘不是回车键 就不处理
+        // if (e.keyCode != 13) {
+        //   return
+        // }
+        console.log(e.target.value)
+
+      }
+    }
+  })
+
+</script>
+</html>

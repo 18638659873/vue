@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>非单元组件</title>
+  <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+<body>
+
+<!--
+VUE中使用组件的步骤如下：
+1. 创建组件
+2. 注册组件
+3. 使用
+
+-->
+
+<div id="root">
+  <h2>Hello,{{name}}</h2>
+  <school></school>
+  <hr>
+  <student></student>
+</div>
+
+</body>
+
+</html>
+<script type="text/javascript">
+  Vue.config.productionTip = false
+
+  const schoolCom = Vue.extend({
+    // el:'#root', 组件定义时，一定不要写el配置项，因为最终所有的组件都要被一个vm管理，由vm决定服务，需要放在哪里
+    template: `
+      <div>
+        <h2>学校名称：{{schoolName}}</h2>
+        <h2>学校地址：{{address}}</h2>
+      </div>
+    `,
+    data() {//使用组件时必须要使用data的函数，把结果return，也是为了保证复用的时候，返回的数据都是一样的
+      return {
+        schoolName: '学校',
+        address: '北京'
+      }
+    }
+  })
+
+  const studentCom = Vue.extend({
+    template: `
+      <div>
+        <h2>学生姓名：{{studentName}}</h2>
+        <h2>学生年龄：{{age}}</h2>
+      </div>
+    `,
+    data() {
+      return {
+        studentName: '张三',
+        age: 19
+      }
+    }
+  })
+
+  // 这个是全局注册组件
+  // Vue.component('shcool','schoolCom')
+
+  const vm = new Vue({
+    el: '#root',
+    data: {
+      name: 'chong'
+    },
+    components: {
+      school: schoolCom,
+      student: studentCom
+    }
+  })
+</script>

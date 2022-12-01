@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>数据绑定</title>
+  <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+
+<body>
+
+<!--准备好一个容器，需要让VUE进行渲染-->
+<div id="root">
+  <h1>Hello，{{name}}</h1>
+</div>
+
+<script type="text/javascript">
+  Vue.config.productionTip = false // 阻止生成提示信息
+
+  // 创建Vue实例
+  // const vm = new Vue({
+  //   el: '#root',// el的第一种写法
+  //   data: { // data的第一种写法
+  //     name: 'chong'
+  //   }
+  // })
+  // vm.$mount('#root') //el的第二种写法
+
+  const vm = new Vue({
+    el: '#root',
+    //
+    // data() {  // 简写模式
+    //   return {
+    //     name: 'chong'
+    //   }
+    // },
+    data: function () { //data的第二种写法
+      console.log('@@@', this) // this对象就是vue实例
+      return {// 把需要的数据都 return 返回出去
+        name: 'chong'
+      }
+    }
+  })
+
+
+</script>
+
+</body>
+</html>

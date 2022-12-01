@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>非单元嵌套组件</title>
+  <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+<body>
+
+<div id="root">
+  <app></app>
+</div>
+
+</body>
+
+</html>
+<script type="text/javascript">
+  Vue.config.productionTip = false
+
+  const studentCom = Vue.extend({
+    template: `
+      <div>
+        <h2>学生姓名：{{studentName}}</h2>
+        <h2>学生年龄：{{age}}</h2>
+      </div>
+    `,
+    data() {
+      return {
+        studentName: '张三',
+        age: 19
+      }
+    }
+  })
+
+  const schoolCom = Vue.extend({
+    template: `
+      <div>
+        <h2>学校名称：{{schoolName}}</h2>
+        <h2>学校地址：{{address}}</h2>
+        <student></student>
+      </div>
+    `,
+    data() {//使用组件时必须要使用data的函数，把结果return，也是为了保证复用的时候，返回的数据都是一样的
+      return {
+        schoolName: '学校',
+        address: '北京'
+      }
+    },
+    components: {
+      student: studentCom
+    }
+  })
+
+
+  const hello = Vue.extend({
+    template: `
+      <div>
+        <h2>hello：{{hello}}</h2>
+      </div>
+    `,
+    data() {
+      return {
+        hello: 'chong'
+      }
+    }
+  })
+
+  const app = Vue.extend({
+    template: `
+      <div>
+        <hello></hello>
+        <school></school>
+      </div>
+    `,
+    components: {
+      school: schoolCom,
+      hello: hello
+    }
+  })
+
+  // 这个是全局注册组件
+  // Vue.component('shcool','schoolCom')
+
+  const vm = new Vue({
+    el: '#root',
+    data: {
+      name: 'chong'
+    },
+    components: {
+      app: app
+    }
+  })
+</script>

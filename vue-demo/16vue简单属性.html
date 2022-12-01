@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>vue 一些简单属性</title>
+  <!--
+
+  1. v—cloak：一般情况下 js会现在上面，就是为了防止 js文件没有拿到，导致js脚本不执行，页面先开始渲染，会展示一些最原始的数据，写在头部就是为了这个效果，
+  但是，有时候不是写在头部的，那么就要借助去 v-cloak 来实现，也就是当js没有被拿到时候，页面上的元素会添加一个v-cloak的属性，当页面渲染完后，这个属性又会被删除，
+  然后我们对这个属性，进行一个css样式上的定义，比如隐藏掉。
+  2. v-once: 只会动态渲染一次，这个数据之后再变化也不会变化了
+  3. v-pre: 页面上写的是什么，就是什么 vue是不会在解析了，也就是把加了的元素的源码直接返回到页面上
+
+  -->
+  <style>
+    [v-cloak] {
+      /* 带有着属性的元素，全部都隐藏掉，等js渲染完这个属性就会消失，元素也就会在出现*/
+      display: none;
+    }
+  </style>
+
+  <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+<body>
+
+<div id="root">
+  <h2 v-cloak>{{name}}</h2>
+  <h2 v-once>初始值：{{n}}</h2>
+  <h2 @click="n++">点击自增+1，{{n}}</h2>
+  <h2 v-pre>点击自增+1，{{n}}</h2>
+</div>
+
+</body>
+
+<script type="text/javascript">
+  Vue.config.productionTip = false
+  const vm = new Vue({
+    el: '#root',
+    data: {
+      name: 'chong',
+      n: 1
+    }
+  })
+
+</script>
+</html>

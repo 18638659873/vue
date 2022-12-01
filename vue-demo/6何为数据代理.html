@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>数据代理</title>
+  <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+
+<body>
+<!--
+
+-->
+
+<!--准备好一个容器，需要让VUE进行渲染-->
+<div id="root">
+
+</div>
+
+<script type="text/javascript">
+  let obj = {x: 100}
+  let obj2 = {y: 200}
+
+  Object.defineProperty(obj2, 'x', {
+    get() {
+      return obj.x
+    },
+    set(v) {
+      obj.x = v
+    }
+  })
+
+  // 这个就是使用obj2 代理了obj数据
+  // VUE中的 data就是使用getter 和setter 实现的数据改变
+  // vm 中的 data  就是 _data
+  // vm 把data中的数据，代理到 vm自己身上了，所以可以直接 vm.name 访问数据，否则就要vm._data.name 了
+</script>
+
+</body>
+</html>

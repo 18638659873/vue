@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>初识VUE</title>
+  <!--  引入vue的js文件-->
+  <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+<!--
+
+1. 初步使用VUE，引入 开发模式的vue.js 或者生产时的vue.min.js
+VUE地址：
+https://v2.cn.vuejs.org/v2/guide/installation.html#Vue-Devtools
+
+2. 安装chorm浏览器的开发者工具
+https://devtools.vuejs.org/guide/installation.html
+由于是国外的源，所以已经放在了文件夹中，之后在chorm浏览器的开发者上直接安装就行
+
+初步认识VUE
+1.想让vue工作，必须创建一个vue实例，且要传入一个配置对象
+2.root容器中的代码依然遵循html文件，只不过是混入了vue的语法代码
+3.root容器中的代码被称为：【vue模板】
+4.vue实例和页面上的容器是一一对应的，如果有两个容器，就使用两个实例
+5.真实场景中只有一个vue实例，会配合其他组件一起使用
+6.{{xxx}} z中的xxx要写js表达式，且xxx可以自动读取data中的所有属性数据
+7.一旦data中的数据发生变化，那么模板中的页面数据也会发生变化
+
+注意区分：js表达式 和 js代码（语法）
+1. 表达式 一个表达式会生成一个值，可以放任何一个需要值的地方
+  1.1 a
+  1.2 a+b
+  1.3 demo(1)
+  1.4 x ===y ? '1':'2'
+
+2. js代码（语句）
+  2.1 if
+  2.2 for
+
+-->
+
+<body>
+
+<!--准备好一个容器，需要让VUE进行渲染-->
+<div id="root">
+  <h1>插值语法</h1>
+  <h1>Hello,{{name}}</h1>
+  <h1>指令语法</h1>
+  <a v-bind:href="school.url">点击我看百度</a>
+  <!--  简写模式-->
+  <!--  <a :href="www.baidu.com">点击跳转百度</a>-->
+  <hr/>
+  <!--  v-bind: 简写方式 :-->
+  <a :href="school.url.toUpperCase()">v-bind的简写方式</a>
+
+
+</div>
+
+<script type="text/javascript">
+  Vue.config.productionTip = false // Vue2中阻止生成提示信息
+
+  // 创建Vue实例
+  const vm = new Vue({
+    el: '#root',
+    data: {
+      name: 'Chong',
+      school: {
+        name: 'yuyu',
+        url: 'http://www.baidu.com'
+      }
+    }
+  })
+</script>
+
+</body>
+</html>

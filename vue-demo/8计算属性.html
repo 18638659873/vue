@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>计算属性</title>
+
+  <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+<body>
+<div id="root">
+
+  姓：<input type="text" v-model="firstName"><br/><br/>
+  名：<input type="text" v-model="lastName"><br/><br/>
+  全名：<span>{{firstName}}-{{lastName}}</span>
+
+
+  <!--  fullName()将函数的返回值返回进行展示-->
+  全名：<span>{{fullName()}}</span>
+
+  <!--  fullName 不带()  是将函数本身直接返回了-->
+  全名：<span>{{fullName}}</span>
+
+  <!--  使用计算属性，进行赋值，计算数据和普通属性一样，可以直接插值使用-->
+  全名：<span>{{fullNameComputed}}</span>
+
+
+</div>
+
+</body>
+
+<script type="text/javascript">
+  const vm = new Vue({
+    el: '#root',
+    data: {
+      firstName: '张',
+      lastName: '三'
+    },
+    computed: {// 这个是计算属性，和属性的区别是 需要通过计算，然后作为属性使用
+      fullNameComputed: {
+        get() {
+          return this.firstName + '-' + this.lastName
+        },
+        set(v) {// 看情况是否需要使用setter方法
+          const arr = v.split('-')
+          this.firstName = arr[0]
+          this.lastName = arr[1]
+        }
+      },
+      // 简写模式，如果只需要使用getter的时候，可以简写成下面的例子
+      // fullNameComputed() {
+      //   return this.firstName + '-' + this.lastName
+      // }
+    },
+    methods: {
+      fullName() {
+        return this.firstName + '-' + this.lastName
+      }
+    }
+
+  })
+
+</script>
+</html>

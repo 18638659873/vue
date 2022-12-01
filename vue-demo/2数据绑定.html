@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>数据绑定</title>
+  <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+
+<body>
+
+<!--
+1. 单向绑定 v-bind: 数据只能从data流向页面
+2. 双向绑定 v-modle: 数据不仅仅可以从data流向页面，也可以从页面流向data，一般都是油value属性的DOM
+备注：
+1. 双向绑定只能作用于 input select等有用户交互的value上
+2. v-modle:value 可以简写为 v-modle 因为他默认收集的就是在value上
+3. v-text 可以往元素中 赋值，一般使用的不多，他不能有标签，就是不支持标签的解析
+4. v-html 会把文本框中的标签 解析为页面属性
+
+console上获取cookies
+document.cookie  就可以查看cookie了
+-->
+
+<!--准备好一个容器，需要让VUE进行渲染-->
+<div id="root">
+
+  单向数据绑定<input type="text" v-bind:value="name"><br/>
+  <!--  单向数据绑定 简写模式：  <input type="text" :value="name"><br/>-->
+  双向数据绑定<input type="text" v-model:value="name"><br/>
+  <!--  双向数据绑定 简写模式： <input type="text" v-model="name"><br/>-->
+
+  <div v-text="addres"></div>
+</div>
+
+<script type="text/javascript">
+  Vue.config.productionTip = false // 阻止生成提示信息
+
+  // 创建Vue实例
+  const vm = new Vue({
+    el: '#root',
+    data: {
+      name: 'Chong',
+      address: '北京'
+    }
+  })
+</script>
+
+</body>
+</html>

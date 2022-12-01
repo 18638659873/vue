@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>数据代理</title>
+  <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+
+<body>
+<!--
+
+-->
+
+<!--准备好一个容器，需要让VUE进行渲染-->
+<div id="root">
+
+</div>
+
+<script type="text/javascript">
+
+  let num = 18
+
+  let person = {
+    name: 'zhangsan',
+    sex: 'male',
+    age: 12
+  }
+
+  // 这个不好，很容易造成无限调用，不要卸载js中，如果要使用，就使用代理模式
+  Object.defineProperty(person, 'age', {
+    value: 19,//修改对象的年龄
+    enumerable: true, //控制数据是否可以枚举，默认值是false，不能枚举 console打印不出来，显示的颜色是浅色
+    writable: true,// 控制属性是否可以被修改，默认是false
+    configurable: true, //控制数据是否可以被删除，默认是false
+    get() { //当读取这个实例时候，会被调用
+      return num
+    },
+    set(v) {//当修改的时候，会被调用
+      num = v
+    }
+  })
+
+  // 一般是使用观察者作为代理使用
+  const obs = new Observer(person)
+
+  function Observer(obj) {
+    const keys = Object.keys(obj)
+    keys.forEach((k) => {
+      Object.defineProperty(this, k, {
+        get() {
+          return obj[k]
+        },
+        set(v) {
+          obj[k] = v
+        }
+      })
+    })
+  }
+
+  console.log(Object.keys(person))
+
+  console.log(person)
+</script>
+
+</body>
+</html>
